@@ -1,0 +1,23 @@
+LEVANTAR UN PLUGIN EN WORDPRESS
+1. ingresar a:
+C:\xampp\htdocs\miwp\wp-content\plugins
+2. crear una carpeta e ingresar
+3. entrar por la web por medio de este enlace:
+http://localhost/miwp/wp-admin/plugins.php?plugin_status=all&paged=1&s
+4. levantar el XAMPP COMO ADMINISTRADOR 
+ y acticar apache y MySQL
+5. una vez dentro de tu carpeta creada, crear una archivo princicpal y colocar: 
+<?php
+/*
+Plugin Name: Mi Plugin PDF
+Description: Plugin de prueba para generación de PDFs.
+Version: 1.0
+Author: Tu Nombre
+*/
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+6. probar en postman con la siguiente ruta: 
+http://localhost/miwp/wp-admin/admin-ajax.php
