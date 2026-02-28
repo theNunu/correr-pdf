@@ -29,12 +29,6 @@ add_action('wp_ajax_make_pdf', 'make_pdf');
 add_action('wp_ajax_nopriv_make_pdf', 'make_pdf');
 function make_pdf()
 {
-
- $response = createPdf::doPdf();
-
-    wp_send_json($response);
-
-    // Validar obligatorios
     $required = [
         'firstName',
         'lastName',
@@ -42,8 +36,6 @@ function make_pdf()
         'cedula',
         'borth',
     ];
-
-
 
     foreach ($required as $r) {
         if (!isset($_POST[$r]) || empty($_POST[$r])) {
@@ -63,17 +55,9 @@ function make_pdf()
 
     ];
 
+    $response = createPdf::doPdf($data);
 
+    wp_send_json($response);
 
-    // $response = EclipsoftOnBoarding::crearSolicitud($data, $token, $file);
-
-    wp_send_json([
-        // 'request_information' => $response,
-        'complete_sign' => $response,
-    ]);
-
-    // wp_send_json([
-    //     'mi_res' => $response,
-    // ]);
 
 }
