@@ -21,3 +21,29 @@ if (!defined('ABSPATH')) {
 
 6. probar en postman con la siguiente ruta: 
 http://localhost/miwp/wp-admin/admin-ajax.php
+-------------------------
+mi-plugin-pdf/
+│
+├── mi-plugin-pdf.php   (archivo principal)
+│
+├── includes/
+│   ├── ajax.php
+│   ├── pdf-generator.php
+│   └── helpers.php
+│
+├── templates/
+│   ├── forms/
+│   │   ├── contrato-form.php
+│   │   ├── solicitud-form.php
+│   │   └── pagare-form.php
+│   │
+│   └── pdf/
+│       ├── contrato.php
+│       ├── solicitud.php
+│       └── pagare.php
+│
+└── assets/
+    ├── js/
+    │   └── main.js
+    └── css/
+        └── style.css
