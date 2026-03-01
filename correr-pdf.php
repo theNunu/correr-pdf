@@ -29,6 +29,17 @@ add_action('wp_ajax_make_pdf', 'make_pdf');
 add_action('wp_ajax_nopriv_make_pdf', 'make_pdf');
 function make_pdf()
 {
+
+    // Obtener carpeta uploads
+    $upload_dir = wp_upload_dir();
+
+    // Crear subcarpeta logs
+    $log_dir = $upload_dir['basedir'] . '/miTxt';
+
+    if (!file_exists($log_dir)) {
+        wp_mkdir_p($log_dir);
+    }
+
     $required = [
         'firstName',
         'lastName',
@@ -47,13 +58,29 @@ function make_pdf()
     }
 
     $data = [
-        'firstname' => sanitize_text_field($_POST['firstName']),
-        'lastName' => sanitize_text_field($_POST['lastName']),
-        'email' => sanitize_email($_POST['email']),
-        'cedula' => sanitize_text_field($_POST['cedula']),
-        'borth' => sanitize_text_field($_POST['borth']),
+        'firstname' => sanitize_text_field($_POST['firstName']. PHP_EOL),
+        'lastName' => sanitize_text_field($_POST['lastName']. PHP_EOL),
+        'email' => sanitize_email($_POST['email']. PHP_EOL),
+        'cedula' => sanitize_text_field($_POST['cedula']. PHP_EOL),
+        'borth' => sanitize_text_field($_POST['borth']. PHP_EOL),
 
     ];
+
+    if ($_POST['tipo_documento'] === 'ingreso') {
+
+        // Ruta final del archivo
+        $log_file = $log_dir . '/' . $_POST['tipo_documento'] . '.txt';
+
+    } else if ($_POST['tipo_documento'] === 'despido') {
+        $log_file = $log_dir . '/' . $_POST['tipo_documento'] . '.txt';
+
+    } else {
+        $log_file = $log_dir . '/' . 'cita_medica' . '.txt';
+
+    }
+
+    // Guardar en modo append (no sobreescribe)
+    file_put_contents($log_file, $data, FILE_APPEND);
 
     $response = createPdf::doPdf($data);
 
