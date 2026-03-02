@@ -6,11 +6,32 @@ Version: 1.0
 Author: Alexis
 */
 
+// IMPORTANTE: Tienes que incluir el archivo donde creaste el shortcode
+// Si lo pusiste en la carpeta includes, la línea sería así:
+require_once plugin_dir_path(__FILE__) . 'includes/mi-formu.php';
+
 require_once plugin_dir_path(__FILE__) . 'services/createPdf.php';
 
 if (!defined('ABSPATH')) {
     exit;
 }
+
+function mi_plugin_cargar_scripts() {
+    // Registramos el archivo JS que está en assets/js
+    wp_enqueue_script(
+        'mi-ajax-pdf-js', 
+        plugins_url('assets/js/ajax-pdf.js', __FILE__), 
+        array('jquery'), 
+        '1.0', 
+        true
+    );
+
+    // PASO CLAVE: Pasamos la URL de AJAX de PHP a JS
+    wp_localize_script('mi-ajax-pdf-js', 'mi_script_params', array(
+        'ajax_url' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'mi_plugin_cargar_scripts');
 
 add_action('wp_ajax_mi_hola_mundo', 'mi_hola_mundo');
 add_action('wp_ajax_nopriv_mi_hola_mundo', 'mi_hola_mundo');
@@ -86,6 +107,8 @@ function make_pdf()
         "url_pdf" => $url_pdf,
         "ruta_txt" => $log_file
     ]);
+
+    wp_die();
 
 
 }

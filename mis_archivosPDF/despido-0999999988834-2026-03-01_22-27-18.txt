@@ -1,0 +1,8 @@
+Array
+(
+    [firstname] => aaaaa
+    [lastName] => aaa
+    [email] => alexkiller0408@gmail.com
+    [cedula] => 0999999988834
+    [borth] => 2026-02-25
+)
