@@ -1,0 +1,8 @@
+Array
+(
+    [firstname] => alexisss
+    [lastName] => cepeda
+    [email] => alexis@gmail.com
+    [cedula] => 00867633500
+    [borth] => 12/03/2004
+)

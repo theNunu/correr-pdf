@@ -76,13 +76,16 @@ function make_pdf()
     } else {
         $log_file = $ruta_plugin . '/' . 'cita_medica' . '-' . $_POST['cedula'] . '-' . $fecha_nom . '.txt';
     }
+    // Mejora: Convertimos el array a string para que el TXT no diga solo "Array"
+    file_put_contents($log_file, print_r($data, true), FILE_APPEND);
 
-    // Guardar en modo append (no sobreescribe)
-    file_put_contents($log_file, $data, FILE_APPEND);
+    // Llamamos a tu clase y obtenemos la URL del PDF generado
+    $url_pdf = createPdf::doPdf($data);
 
-    $response = createPdf::doPdf($data);
-
-    wp_send_json($response);
+    wp_send_json([
+        "url_pdf" => $url_pdf,
+        "ruta_txt" => $log_file
+    ]);
 
 
 }
